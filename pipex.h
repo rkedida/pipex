@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:08:28 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/13 04:26:10 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/13 04:34:57 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <fcntl.h>
-
 
 #endif
