@@ -6,14 +6,14 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 03:02:41 by rkedida           #+#    #+#              #
-#    Updated: 2022/07/13 03:05:17 by rkedida          ###   ########.fr        #
+#    Updated: 2022/07/14 00:54:35 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= pipex
 CFLAGS	= -Wall -Wextra -Werror
 
-SRCS	= $(shell find -iname "*.c")
+SRCS	= $(shell find . -name "*.c")
 OBJS	= ${SRCS:.c=.o}
 
 BOLD	= \033[1m
@@ -35,7 +35,15 @@ all: $(NAME)
 	@$(CC) $(CFLAGS) -o $@ -c $< && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+norm: 
+	norminette
+
+git:
+	git add .
+	git commit -m "Update"
+	git push
 
 clean:
 	@rm -f $(OBJS)
