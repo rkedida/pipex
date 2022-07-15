@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:02:00 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/14 00:41:06 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/15 02:16:17 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,12 @@ int	main(int ac, char **av, char **envp)
 		waitpid(pid, NULL, 0);
 		parent_process(av, envp, pfd);
 	}
-	else
+	else if (ac < 5 || ac > 5)
 	{
 		ft_putstr_fd("Error: Bad arguments\n", 2);
-		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 2);
+		ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 1);
 	}
+	else
+		ft_putstr_fd("Error: Bad arguments\n", 2);
 	return (0);
 }

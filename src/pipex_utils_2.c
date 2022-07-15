@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 00:39:12 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/14 00:41:17 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/15 02:47:27 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,23 @@ char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 	return (NULL);
 }
 
+char	*ft_strchr(const char *str, int c)
+{
+	int		i;
+
+	i = ft_strlen(str);
+	if (c == '\0')
+		return ((char *)&str[i]);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			return ((char *)&str[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*find_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -54,8 +71,21 @@ char	*find_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK) == 0)
+		{
+			paths = ft_split(cmd, ' ');
+			path = paths[0];
+			free(paths);
+			return (paths[0]);
+		}
+		return (NULL);
+	}
+	while (envp[i] && ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
+	if (envp[i] == NULL)
+		return (NULL);
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
 	while (paths[i])
@@ -89,10 +119,13 @@ void	exe(char *av, char **envp)
 		path = find_path(cmd[0], envp);
 	if (!path)
 	{
+		ft_putstr_fd("pipex: command not found : ", 2);
+		ft_putstr_fd(cmd[0], 2);
+		ft_putstr_fd("\n", 2);
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		error();
+		exit(EXIT_FAILURE);
 	}
 	if (execve(path, cmd, envp) == -1)
 		error();
