@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PIPEX_SOURCE=./
-PIPEX_BIN=./pipex
+PIPEX_BIN=./pipex_bonus
 
 source utils.sh
 OS=$(uname)
@@ -67,6 +67,7 @@ nm -g -C --undefined-only $PIPEX_BIN | grep -v __  | grep -v dyld_stub_binder | 
 COMM=$(comm -13 <(sort -u white.txt) <(sort -u ./.tmp/functions.txt) )
 if [ $COMM ]
 then
+	echo $COMM
 	print_ko "\t[3] The program doesn't use forbidden functions \t [KO]"
 else
 	print_ok "\t[3] The program doesn't use forbidden functions \t [OK]"

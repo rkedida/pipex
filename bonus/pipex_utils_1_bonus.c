@@ -6,11 +6,11 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:08:17 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/15 01:08:50 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:09:43 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../includes/pipex_bonus.h"
 
 void	ft_putstr_fd_bonus(char *s, int fd)
 {
@@ -21,11 +21,8 @@ void	ft_putstr_fd_bonus(char *s, int fd)
 
 void	ft_error_message(void)
 {
-	ft_putstr_fd_bonus("Error: Bad argument\n", 2);
-	ft_putstr_fd_bonus("Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 2);
-	ft_putstr_fd_bonus("    ./pipex \"here_doc\" <LIMITER> \
-<cmd> <cmd1> <...> <file>\n", 2);
-	exit(EXIT_SUCCESS);
+	perror("Error");
+	exit(EXIT_FAILURE);
 }
 
 void	ft_exe_bonus(char *av, char **envp)
@@ -42,10 +39,13 @@ void	ft_exe_bonus(char *av, char **envp)
 		path = find_path(cmd[0], envp);
 	if (!path)
 	{
+		ft_putstr_fd_bonus("pipex: command not found : ", 2);
+		ft_putstr_fd_bonus(cmd[0], 2);
+		ft_putstr_fd_bonus("\n", 2);
 		while (cmd[++i])
 			free(cmd[i]);
 		free(cmd);
-		ft_error_message();
+		exit(EXIT_FAILURE);
 	}
 	if (execve(path, cmd, envp) == -1)
 		ft_error_message();
@@ -79,6 +79,9 @@ int	open_pfd(char *av, int i)
 	else if (i == 2)
 		pfd = open(av, O_RDONLY, 0777);
 	if (pfd == -1)
-		ft_error_message();
+	{
+		perror("Error");
+		pfd = open("/dev/null", O_RDONLY, 0777);
+	}
 	return (pfd);
 }

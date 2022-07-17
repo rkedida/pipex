@@ -6,11 +6,11 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 02:49:55 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/15 01:11:34 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:06:07 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 char	*free_and_cpy_reminder(char *str)
 {

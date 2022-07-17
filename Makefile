@@ -6,19 +6,20 @@
 #    By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/13 03:02:41 by rkedida           #+#    #+#              #
-#    Updated: 2022/07/15 02:50:44 by rkedida          ###   ########.fr        #
+#    Updated: 2022/07/17 20:42:32 by rkedida          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= pipex
-BONUS	= pipex
+BONUS	= pipex_bonus
 
 CFLAGS				= -Wall -Wextra -Werror
 HEADERS				= -I ./includes
 OBJ_DIR				= ./obj/
 
 SRC_DIR				= ./src/
-SRCS_FILES			= pipex.c pipex_utils_1.c pipex_utils_2.c
+SRCS_FILES			= pipex.c pipex_utils_1.c pipex_utils_2.c pipex_utils_3.c \
+						pipex_utils_4.c
 SRC					= $(addprefix $(SRC_DIR), $(SRCS_FILES))
 
 OBJS_FILES			= $(addprefix $(OBJ_DIR), $(SRCS_FILES))
@@ -27,7 +28,8 @@ OBJS	 			= $(OBJS_FILES:.c=.o)
 BONUS_DIR			= ./bonus/
 SRCS_FILES_BONUS	= pipex_bonus.c pipex_utils_1_bonus.c pipex_utils_2_bonus.c \
 						get_next_line_bonus.c get_next_line_utils_1_bonus.c \
-						get_next_line_utils_2_bonus.c
+						get_next_line_utils_2_bonus.c pipex_utils_3_bonus.c \
+						pipex_utils_4_bonus.c
 SRCS_BONUS			=	$(addprefix $(BONUS_DIR), $(SRCS_FILES_BONUS))
 
 OBJS_FILES_BONUS	= $(addprefix $(OBJ_DIR), $(SRCS_FILES_BONUS))
@@ -52,7 +54,6 @@ all: $(NAME)
 $(OBJ_DIR):
 	@mkdir -p $(OBJ_DIR)
 
-
 $(OBJ_DIR)%.o : $(SRC_DIR)%.c
 	@$(CC) ${FLAGS} ${HEADERS} -c $< -o $@ && printf "$(GREEN)$(BOLD)\rCompiling: $(notdir $<)\r\e[35C[OK]\n$(RESET)"
 
@@ -62,7 +63,9 @@ $(OBJ_DIR)%.o : $(BONUS_DIR)%.c
 $(NAME): $(OBJ_DIR) $(OBJS)
 	@$(CC) $(HEADERS) $(CFLAGS) $(OBJS) -o $(NAME)
 
-bonus: $(OBJ_DIR) $(OBJS_BONUS)
+bonus: $(BONUS)
+
+$(BONUS): $(OBJ_DIR) $(OBJS_BONUS)
 	@$(CC) $(HEADERS) $(CFLAGS) $(OBJS_BONUS) -o $(BONUS)
 
 norm: 
@@ -81,7 +84,6 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(BONUS)
-	@rm -rf $(OBJ_DIR)
 
 re: clean all
 

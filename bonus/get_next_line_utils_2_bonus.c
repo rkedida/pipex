@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils_3_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_2_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:42:09 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/15 01:21:42 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:07:23 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 t_read	*check_fd(t_read *read, int fd)
 {
@@ -39,4 +39,14 @@ t_read	*check_fd(t_read *read, int fd)
 		return (ret);
 	}
 	return (curr);
+}
+
+void	new_line_remove(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i] != '\n')
+		i++;
+	line[i] = '\0';
 }

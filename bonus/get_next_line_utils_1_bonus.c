@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils_1_bonus.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/23 02:48:51 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/15 01:05:34 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:06:18 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 char	*ft_strjoin(char *s, char *buff)
 {
@@ -64,7 +64,7 @@ t_read	*clear_head(t_read *read, int fd)
 	return (read);
 }
 
-size_t	ft_strlen1(char *s)
+size_t	ft_strlen1(const char *s)
 {
 	size_t	i;
 

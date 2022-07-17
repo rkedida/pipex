@@ -6,7 +6,7 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:08:28 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/15 01:42:51 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/17 23:50:47 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <stdio.h>
 # include <sys/wait.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
 // functions in pipex.c
 
@@ -37,7 +38,22 @@ void			error(void);
 void			ft_putstr_fd(char *s, int fd);
 char			*ft_strnstr(const char *haystack, \
 					const char *needle, size_t len);
-char			*find_path(char *cmd, char **envp);
+char			*ft_strchr(const char *str, int c);
 void			exe(char *av, char **envp);
+
+// functions in pipex_utils_3.c
+
+char			*there_is_path(char *cmd, char **paths, char *path);
+void			paths_free(char **paths, int i);
+char			*helper(char **paths, char *path, char *cmd);
+char			*find_path(char *cmd, char **envp);
+char			*check_s(const char *s);
+
+// functions in pipex_utils_4.c
+
+void			ft_free(char**strs);
+char			*free_split(char **dest);
+char			*check_dest(char **dest);
+void			print_exe(char **cmd);
 
 #endif

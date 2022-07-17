@@ -1,29 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils_2.c                                    :+:      :+:    :+:   */
+/*   pipex_utils_4_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/14 00:39:12 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/18 00:10:35 by rkedida          ###   ########.fr       */
+/*   Created: 2022/07/17 19:56:35 by rkedida           #+#    #+#             */
+/*   Updated: 2022/07/18 00:09:59 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/pipex.h"
-
-void	error(void)
-{
-	perror("Error");
-	exit(EXIT_FAILURE);
-}
-
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
-}
+#include "../includes/pipex_bonus.h"
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
 {
@@ -50,7 +37,7 @@ char	*ft_strchr(const char *str, int c)
 {
 	int		i;
 
-	i = ft_strlen(str);
+	i = ft_strlen1(str);
 	if (c == '\0')
 		return ((char *)&str[i]);
 	i = 0;
@@ -63,31 +50,23 @@ char	*ft_strchr(const char *str, int c)
 	return (NULL);
 }
 
-void	exe(char *av, char **envp)
+char	*check_s(const char *s)
 {
-	int		i;
-	char	*path;
-	char	**cmd;
+	if (!s)
+		exit(0);
+	return ((char *)s);
+}
 
-	i = -1;
-	cmd = ft_split(av, ' ');
-	if (access(cmd[0], F_OK | X_OK) == 0)
-		path = cmd[0];
-	else
-		path = find_path(cmd[0], envp);
-	if (!path)
-	{
-		print_exe(cmd);
-		ft_free(cmd);
-		free(path);
-		exit(EXIT_FAILURE);
-	}
-	if (execve(path, cmd, envp) == -1)
-	{
-		free(path);
-		ft_free(cmd);
-		error();
-	}
-	free(path);
-	ft_free(cmd);
+char	*check_dest(char **dest)
+{
+	if (!dest)
+		exit(0);
+	return (*dest);
+}
+
+void	erron(void)
+{
+	ft_putstr_fd_bonus("Error: Bad arguments\n", 2);
+	ft_putstr_fd_bonus("Ex: ./pipex <file1> <cmd1> <cmd2> <file2>\n", 2);
+	ft_putstr_fd_bonus("Error: ./pipex file1 cmd1 cmd2 ... cmdn file2\n", 2);
 }

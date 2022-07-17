@@ -6,11 +6,11 @@
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 08:02:00 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/15 02:16:17 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:10:51 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
 void	child_process(char **av, char **envp, int *pfd)
 {
@@ -18,7 +18,10 @@ void	child_process(char **av, char **envp, int *pfd)
 
 	file_input = open(av[1], O_RDONLY, 0777);
 	if (file_input == -1)
-		error();
+	{
+		perror("Error");
+		file_input = open("/dev/null", O_RDONLY, 0777);
+	}
 	dup2(pfd[1], STDOUT_FILENO);
 	dup2(file_input, STDIN_FILENO);
 	close(pfd[0]);

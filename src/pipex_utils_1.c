@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*   pipex_utils_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/12 16:08:24 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/14 00:38:35 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:10:27 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
 static char
 	*ft_strcpyt(char *str, char c)
@@ -59,13 +59,11 @@ char	**ft_split(char const *s, char c)
 	char	**dest;
 	int		i;
 
-	if (!s)
-		return (NULL);
+	check_s(s);
 	str = (char *)s;
 	i = 0;
 	dest = malloc(sizeof(char *) * (count_words(str, c) + 1));
-	if (!dest)
-		return (NULL);
+	check_dest(dest);
 	while (*str)
 	{
 		while (*str && *str == c)
@@ -73,6 +71,8 @@ char	**ft_split(char const *s, char c)
 		if (*str && *str != c)
 		{
 			dest[i] = ft_strcpyt(str, c);
+			if (dest[i] == NULL)
+				free_split(dest);
 			i++;
 			while (*str && *str != c)
 				str++;

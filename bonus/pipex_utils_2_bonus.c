@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_bonus.c                                   :+:      :+:    :+:   */
+/*   pipex_utils_2_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rkedida <rkedida@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 03:22:16 by rkedida           #+#    #+#             */
-/*   Updated: 2022/07/14 03:45:37 by rkedida          ###   ########.fr       */
+/*   Updated: 2022/07/18 00:09:52 by rkedida          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
+#include "../includes/pipex_bonus.h"
 
 static char
 	*ft_strcpyt(char *str, char c)
@@ -53,19 +53,37 @@ static int	count_words(char *str, char c)
 	return (i);
 }
 
+static void	ft_free(char**strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i])
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs);
+	strs = NULL;
+}
+
+char	*free_split(char **dest)
+{
+	ft_free(dest);
+	exit(0);
+}
+
 char	**ft_split(char const *s, char c)
 {
 	char	*str;
 	char	**dest;
 	int		i;
 
-	if (!s)
-		return (NULL);
+	check_s(s);
 	str = (char *)s;
 	i = 0;
 	dest = malloc(sizeof(char *) * (count_words(str, c) + 1));
-	if (!dest)
-		return (NULL);
+	check_dest(dest);
 	while (*str)
 	{
 		while (*str && *str == c)
@@ -73,6 +91,8 @@ char	**ft_split(char const *s, char c)
 		if (*str && *str != c)
 		{
 			dest[i] = ft_strcpyt(str, c);
+			if (dest[i] == NULL)
+				free_split(dest);
 			i++;
 			while (*str && *str != c)
 				str++;
@@ -80,54 +100,4 @@ char	**ft_split(char const *s, char c)
 	}
 	dest[i] = NULL;
 	return (dest);
-}
-
-char	*find_path(char *cmd, char **envp)
-{
-	char	**paths;
-	char	*path;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	i = 0;
-	while (paths[i])
-	{
-		tmp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(path, F_OK) == 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
-	return (NULL);
-}
-
-char	*ft_strnstr(const char *haystack, const char *needle, size_t len)
-{
-	size_t	i;
-	size_t	n;
-
-	i = 0;
-	if (*needle == '\0')
-		return ((char *)haystack);
-	while (haystack[i] && i < len)
-	{
-		n = 0;
-		while (needle[n] && haystack[i + n]
-			&& haystack[i + n] == needle[n] && i + n < len)
-			n++;
-		if (needle[n] == '\0')
-			return ((char *)haystack + i);
-		i++;
-	}
-	return (NULL);
 }
