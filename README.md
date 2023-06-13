@@ -2,6 +2,7 @@
 
 ## Introduction
 Pipex is a 42 school student project, the aim of which is to understand more about UNIX mechanisms
+
 through the creation of a program that behaves like a simple pipe command.
 
 ## Features
